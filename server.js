@@ -2,39 +2,39 @@ const express = require("express");
 
 const app = express();
 
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// GET request
+const PORT = 3000;
+
+// GET Request
 app.get("/", (req, res) => {
-    res.send(`
-        <h1>Express Class Activity</h1>
-
-        <h2>GET Request</h2>
-        <p>This page is rendered using Express.</p>
-
-        <h2>POST Request</h2>
-
-        <form action="/submit" method="POST">
-            <input type="text" name="name" placeholder="Enter your name">
-            <button type="submit">Submit</button>
-        </form>
-    `);
+    res.send("Hello from Express Backend!");
 });
 
-// POST request
-app.post("/submit", (req, res) => {
-    const name = req.body.name;
-
-    res.send(`
-        <h1>POST Request Successful</h1>
-        <p>Hello ${name}!</p>
-        <a href="/">Go Back</a>
-    `);
+// GET API
+app.get("/users", (req, res) => {
+    res.json([
+        {
+            id: 1,
+            name: "Yashika"
+        },
+        {
+            id: 2,
+            name: "Rahul"
+        }
+    ]);
 });
 
-const PORT = process.env.PORT || 3000;
+// POST API
+app.post("/users", (req, res) => {
+    const user = req.body;
+
+    res.json({
+        message: "User added successfully",
+        user: user
+    });
+});
 
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`Server running at http://localhost:${PORT}`);
 });
